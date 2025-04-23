@@ -27,7 +27,7 @@ const SendFile = () => {
     formData.append("userEmail", user.primaryEmailAddress?.emailAddress || "N/A");
 
     try {
-      const response = await fetch("http://localhost:5001/upload", {
+      const response = await fetch("http://13.216.89.171:5001/upload", {
         method: "POST",
         body: formData,
       });
@@ -50,7 +50,7 @@ const SendFile = () => {
     if (!user) return;
     const email = user?.primaryEmailAddress?.emailAddress || "N/A";
     try {
-      const res = await fetch(`http://localhost:5001/files?userEmail=${encodeURIComponent(email)}`);
+      const res = await fetch(`http://13.216.89.171:5001/files?userEmail=${encodeURIComponent(email)}`);
       const data = await res.json();
       setFiles(data); // No need to reverse if backend sorts it
     } catch (err) {
@@ -60,7 +60,7 @@ const SendFile = () => {
 
   const downloadFile = async (key) => {
     try {
-      const res = await fetch(`http://localhost:5001/download/${key}`);
+      const res = await fetch(`http://13.216.89.171:5001/download/${key}`);
       const data = await res.json();
       window.open(data.url, "_blank");
     } catch (err) {
