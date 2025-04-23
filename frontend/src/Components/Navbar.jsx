@@ -16,9 +16,6 @@ export default function Navbar() {
           <Link to="/sendfiles" className="text-lg font-medium text-white hover:text-blue-500">
             Send File
           </Link>
-          <Link to="/download" className="text-lg font-medium text-white hover:text-blue-500">
-            Download
-          </Link>
         </div>
 
         {/* Right - User Profile */}
