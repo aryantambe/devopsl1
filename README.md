@@ -1,1 +1,1 @@
-# DO NOT PUSH ANYTHING ON MAIN
+# Angular Hello World App with Docker, Docker-Compose, Jenkins
