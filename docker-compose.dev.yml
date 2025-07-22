@@ -1,0 +1,13 @@
+# You can optionally remove this line:
+# version: '3.8'
+
+services:
+  angular-app:
+    image: node:18
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "4200:4200"
+    command: sh -c "npm install -g @angular/cli && npm install && ng serve --host 0.0.0.0"
+
