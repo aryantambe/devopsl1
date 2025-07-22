@@ -1,11 +1,13 @@
-FROM jenkins/jenkins:lts-jdk17
+# Stage 1: Build the Angular app
+FROM node:22-alpine AS build
 
-USER root
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build --prod
 
-# Install Docker CLI
-RUN apt-get update && apt-get install -y docker.io coreutils && apt-get clean
+# Stage 2: Serve the app with Nginx
+FROM nginx:alpine
+COPY --from=build /app/dist/my-angular-app /usr/share/nginx/html
 
-# Add Jenkins user to root group (GID 0) so it can access Docker socket
-RUN usermod -aG root jenkins
-
-USER jenkins
+EXPOSE 80
