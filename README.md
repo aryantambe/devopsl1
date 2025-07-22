@@ -1,9 +1,6 @@
-# GitShare 🌐
+## Command to initialize Angular App
+- npm install -g @angular/cli
+- ng new hello-app
+- ng serve
 
-GitShare is a full-stack web application designed for seamless sharing and management of GitHub repositories among users. Built with a modern MERN (MongoDB, Express, React, Node.js) stack, it allows users to upload, manage, and view shared GitHub repositories in an intuitive UI.
-
-
-
-
-
-
+Note: Angular 17+ builds output to dist/<app>/browser/ (not directly to dist/<app>/)
