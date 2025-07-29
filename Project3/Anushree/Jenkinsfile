@@ -1,13 +1,20 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven' 
+        maven 'Maven'  // Your Maven installation name in Jenkins tools config
     }
     stages {
+        stage('Prepare') {
+            steps {
+                dir('Project3/Anushree') {
+                    sh 'chmod +x mvnw'
+                }
+            }
+        }
         stage('Build') {
             steps {
                 dir('Project3/Anushree') {
-                    sh 'mvn clean install'
+                    sh './mvnw clean install'
                 }
             }
         }
