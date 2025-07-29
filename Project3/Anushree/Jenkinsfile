@@ -1,27 +1,19 @@
 pipeline {
-  agent any
-  tools {
-    maven 'Maven'
-  }
-  stages {
-    stage('Clean Workspace') {
-      steps {
-        deleteDir()   // wipes entire workspace, including mvnw permissions
-      }
-    }
-    stage('Prepare') {
-      steps {
-        dir('Project3/Anushree') {
-          sh 'chmod +x mvnw'
+    agent any
+    stages {
+        stage('Prepare') {
+            steps {
+                dir('Project3/Anushree') {
+                    sh 'chmod +x mvnw'
+                }
+            }
         }
-      }
-    }
-    stage('Build') {
-      steps {
-        dir('Project3/Anushree') {
-          sh './mvnw clean install'
+        stage('Build') {
+            steps {
+                dir('Project3/Anushree') {
+                    sh './mvnw clean install'
+                }
+            }
         }
-      }
     }
-  }
 }
