@@ -1,0 +1,33 @@
+pipeline {
+    agent any
+
+    tools {
+        maven 'Maven 3.9.6'  // (or whatever you named Maven in Jenkins)
+    }
+
+    stages {
+        stage('Clone Code') {
+            steps {
+                git url: 'https://github.com/anushreedahiya/DevOps-Lab.git', branch: 'main'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh 'cd Project3/Anushree && mvn clean install'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh 'cd Project3/Anushree && mvn test'
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'Project3/Anushree/target/*.jar', fingerprint: true
+            }
+        }
+    }
+}
