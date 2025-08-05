@@ -1,0 +1,78 @@
+// Jenkinsfile
+// This Jenkinsfile defines a simple CI/CD pipeline for a Java Maven project.
+
+pipeline {
+    // Agent specifies where the pipeline will run. 'any' means it can run on any available agent.
+    agent any
+
+    // Stages define the different steps of your pipeline.
+    stages {
+        // Stage 1: Checkout - Clones the source code from the Git repository.
+        stage('Checkout') {
+            steps {
+                // Uses the Git SCM plugin to clone the repository.
+                // The URL and credentials should be configured in the Jenkins job.
+                git branch: 'main', url: 'https://github.com/YOUR_USERNAME/my-maven-app.git'
+                // IMPORTANT: Replace 'YOUR_USERNAME' and 'my-maven-app.git' with your actual GitHub repository URL.
+                // If your default branch is 'master', change 'main' to 'master'.
+            }
+        }
+
+        // Stage 2: Build - Compiles the Maven project.
+        stage('Build') {
+            steps {
+                // Uses the Maven wrapper (mvnw) if present, otherwise assumes 'mvn' is in PATH.
+                // 'clean install' cleans the target directory and builds the project, running tests.
+                sh 'mvn clean install'
+            }
+        }
+
+        // Stage 3: Test - This stage is implicitly covered by 'mvn clean install' in the Build stage,
+        // but you can add specific test commands here if needed (e.g., for code coverage reports).
+        stage('Test') {
+            steps {
+                // For demonstration, we'll just echo that tests were run.
+                // 'mvn clean install' already executes tests.
+                sh 'echo "Tests were run as part of the build stage."'
+                // If you had separate test commands, they would go here.
+                // For example, if you wanted to generate a Surefire report explicitly:
+                // sh 'mvn surefire-report:report'
+            }
+        }
+
+        // Stage 4: Package - Creates the executable JAR file.
+        stage('Package') {
+            steps {
+                // The 'package' goal compiles the code, runs tests, and packages the compiled code into a JAR/WAR.
+                sh 'mvn package'
+            }
+        }
+
+        // Stage 5: Archive Artifacts - Archives the generated JAR file.
+        stage('Archive Artifacts') {
+            steps {
+                // Archives the JAR file created in the target directory.
+                // This makes the artifact available for download from Jenkins.
+                archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+            }
+        }
+    }
+
+    // Post-build actions to run after the pipeline completes, regardless of success or failure.
+    post {
+        // Always runs, useful for cleanup or notifications.
+        always {
+            echo 'Pipeline finished.'
+        }
+        // Runs only if the pipeline build is successful.
+        success {
+            echo 'Pipeline succeeded!'
+            // You might add notifications here (e.g., email, Slack).
+        }
+        // Runs only if the pipeline build fails.
+        failure {
+            echo 'Pipeline failed!'
+            // You might add error notifications here.
+        }
+    }
+}
