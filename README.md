@@ -176,16 +176,3 @@ docker pull <dockerhub_username>/retail-app:v1
 
 ---
 
-## Credits
-
-* Docker Scout - [https://docs.docker.com/scout/](https://docs.docker.com/scout/)
-* Docker Content Trust - [https://docs.docker.com/engine/security/trust/](https://docs.docker.com/engine/security/trust/)
-
----
-
-## 🔐 Author
-
-**Abhishek Rajput**
-- Email: [abhishek25022004@gmail.com](mailto:abhishek25022004@gmail.com)
-- DockerHub: [abhi25022004](https://hub.docker.com/u/abhi25022004)
-
