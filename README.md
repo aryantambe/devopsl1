@@ -1,15 +1,24 @@
-# Project 5: Containerizing Spring Boot Application and Scanning Docker Image with DTR
+# Project 6 : Social Media API – FastAPI + Kubernetes (WSL)
 
-## 📝 Problem Statement
-
-> Containerizing an application and scanning its Docker image with Docker Trusted Registry (DTR). Deploy a Spring Boot application on Docker for a retail company with multiple web applications.
+A minimal social media backend built using FastAPI, containerized with Docker, and deployed using Kubernetes on Windows via WSL2.
 
 ---
 
-## 🚀 Objective
+## 🧠 Features
 
-- Build and containerize a Spring Boot web application.
-- Simulate deployment of multiple retail web apps using Docker.
-- Scan the Docker image for vulnerabilities using Docker Trusted Registry (DTR) or Docker Scan.
-- Demonstrate a real-world DevOps scenario for microservices-based deployment.
+- Create & view posts (in-memory storage)
+- Health check endpoint
+- Simulate CPU load (for HPA testing)
+- Lightweight and easy to deploy
+
+---
+
+## 🧰 Tech Stack
+
+- 🐍 Python 3.10+
+- ⚡ FastAPI
+- 🐳 Docker
+- ☸️ Kubernetes (`kubectl` via WSL2)
+- 💻 Windows (using WSL2 backend)
+
 
