@@ -25,7 +25,10 @@ It integrates **AWS S3** for file storage, **RDS** for persistence, and enforces
 - Hosted on **AWS EC2** with a **static Elastic IP** for global access.  
 - Automated CI/CD pipeline ensures **secure and consistent deployments**.
 
-![Architecture Diagram](./images/architecture.png)
+![Architecture Diagram](./architecture.png)
+![proof1](./proof1.png)
+![proof2](./proof2.png)
+![proof3](./proof3.png)
 
 ---
 
