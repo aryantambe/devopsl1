@@ -1,4 +1,5 @@
 ![prrof](./image.png)
+![prrof2](./im2.png)
 
 # Create namespace
 kubectl create namespace mongo-demo
