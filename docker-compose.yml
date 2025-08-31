@@ -1,24 +1,28 @@
+
+
+
+
 version: '3.8'
 
 services:
-  jenkins:
-    build:
-      context: .
-      dockerfile: Dockerfile.jenkins
-    user: root
-    ports:
-      - "8080:8080"
-      - "50000:50000"
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-
   angular-app:
     build:
-      context: ./my-angular-app
+      context: .
       dockerfile: Dockerfile
     ports:
       - "4200:80"
+
+#  jenkins:
+#    build:
+#      context: .
+#      dockerfile: Dockerfile.jenkins
+#    user: root
+#    ports:
+#      - "8080:8080"
+#      - "50000:50000"
+#    volumes:
+#      - jenkins_home:/var/jenkins_home
+#      - /var/run/docker.sock:/var/run/docker.sock
 
 volumes:
   jenkins_home:
