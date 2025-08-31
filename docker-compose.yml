@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  retail-app:
+    build:
+      context: ./springbootapp_docker_a5/retail-app
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+    restart: unless-stopped
