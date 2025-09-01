@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  jenkins:
+    build: ./jenkins
+    container_name: jenkins
+    ports:
+      - "9090:8080"      # Jenkins UI will be on localhost:9090
+      - "50000:50000"   # For agents
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - ./:/repo:ro     # Mount project read-only so pipeline can copy files
+
+  agent1:
+    build: ./agent1
+    container_name: agent1
+    volumes:
+      - ./:/repo:ro
+    expose:
+      - "22"
+
+  agent2:
+    build: ./agent2
+    container_name: agent2
+    volumes:
+      - ./:/repo:ro
+    expose:
+      - "22"
+
+volumes:
+  jenkins_home:
