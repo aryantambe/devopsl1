@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/your-username/your-repo.git'
+                git branch: 'main', url: 'https://github.com/aryantambe/devopsl1/tree/Archit-025-assignment1.git'
             }
         }
 
@@ -27,3 +27,4 @@ pipeline {
         }
     }
 }
+
