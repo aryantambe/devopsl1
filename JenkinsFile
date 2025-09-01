@@ -1,0 +1,31 @@
+pipeline {
+    agent {
+        docker { image 'maven:3.9.9-eclipse-temurin-17' }
+    }
+    environment {
+        IMAGE_NAME = "your-dockerhub-username/hello-jenkins"
+    }
+    stages {
+        stage('Build & Test') {
+            steps {
+                sh 'mvn -B clean test'
+            }
+            post {
+                always { junit 'target/surefire-reports/*.xml' }
+            }
+        }
+        stage('Package') {
+            steps { sh 'mvn -B package -DskipTests' }
+        }
+        stage('Docker Build & Push') {
+            environment { REG = credentials('dockerhub-creds') }
+            steps {
+                sh '''
+                  echo "$REG_PSW" | docker login -u "$REG_USR" --password-stdin
+                  docker build -t $IMAGE_NAME:latest .
+                  docker push $IMAGE_NAME:latest
+                '''
+            }
+        }
+    }
+}
