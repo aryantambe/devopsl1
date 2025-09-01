@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Social Media</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌐 Simple Social Media</h1>
+            <p>Share your thoughts with the world!</p>
+        </header>
+
+        <!-- User Registration -->
+        <section class="user-section">
+            <h2>Create Account</h2>
+            <div class="form-group">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="email" id="email" placeholder="Email" required>
+                <button onclick="createUser()">Create User</button>
+            </div>
+        </section>
+
+        <!-- Post Creation -->
+        <section class="post-section">
+            <h2>Create Post</h2>
+            <div class="form-group">
+                <input type="text" id="postUsername" placeholder="Your username" required>
+                <textarea id="postContent" placeholder="What's on your mind?" required></textarea>
+                <button onclick="createPost()">Share Post</button>
+            </div>
+        </section>
+
+        <!-- Posts Display -->
+        <section class="posts-section">
+            <h2>Recent Posts</h2>
+            <button onclick="loadPosts()" class="refresh-btn">🔄 Refresh Posts</button>
+            <div id="postsContainer">
+                <!-- Posts will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Users Display -->
+        <section class="users-section">
+            <h2>Users</h2>
+            <button onclick="loadUsers()" class="refresh-btn">🔄 Refresh Users</button>
+            <div id="usersContainer">
+                <!-- Users will be loaded here -->
+            </div>
+        </section>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
