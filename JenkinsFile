@@ -1,12 +1,13 @@
 pipeline {
-    agent {
-        docker { image 'maven:3.9.9-eclipse-temurin-17' }
-    }
+    agent any   // use normal agent for Docker build/push
     environment {
         IMAGE_NAME = "your-dockerhub-username/hello-jenkins"
     }
     stages {
         stage('Build & Test') {
+            agent {
+                docker { image 'maven:3.9.9-eclipse-temurin-17' }
+            }
             steps {
                 sh 'mvn -B clean test'
             }
@@ -15,7 +16,12 @@ pipeline {
             }
         }
         stage('Package') {
-            steps { sh 'mvn -B package -DskipTests' }
+            agent {
+                docker { image 'maven:3.9.9-eclipse-temurin-17' }
+            }
+            steps {
+                sh 'mvn -B package -DskipTests'
+            }
         }
         stage('Docker Build & Push') {
             environment { REG = credentials('dockerhub-creds') }
