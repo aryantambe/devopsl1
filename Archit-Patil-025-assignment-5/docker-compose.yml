@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  retail-app1:
+    build: .
+    container_name: retail-app1
+    ports:
+      - "8080:8080"
+
+  retail-app2:
+    build: .
+    container_name: retail-app2
+    ports:
+      - "8081:8080"
