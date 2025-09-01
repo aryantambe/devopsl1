@@ -1,0 +1,42 @@
+pipeline {
+    agent none
+
+    stages {
+        stage('Build on Slave1') {
+            agent { label 'slave1' }
+            steps {
+                dir('.') {
+                    sh 'chmod +x mvnw'
+                    sh './mvnw clean compile'
+                }
+            }
+        }
+
+        stage('Test on Slave2') {
+            agent { label 'slave2' }
+            steps {
+                dir('.') {
+                    sh './mvnw test'
+                }
+            }
+        }
+
+        stage('Package on Slave1') {
+            agent { label 'slave1' }
+            steps {
+                dir('.') {
+                    sh './mvnw package'
+                }
+            }
+        }
+    }
+
+    post {
+        success {
+            echo "Distributed Pipeline Completed Successfully!"
+        }
+        failure {
+            echo "Pipeline Failed!"
+        }
+    }
+}
