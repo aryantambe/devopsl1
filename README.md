@@ -1,6 +1,5 @@
-## Command to initialize Angular App
-- npm install -g @angular/cli
-- ng new hello-app
-- ng serve
+## Command to initialize and run react app
+- npx create-react-app my-app
+- npm install
+- npm run dev
 
-Note: Angular 17+ builds output to dist/<app>/browser/ (not directly to dist/<app>/)
