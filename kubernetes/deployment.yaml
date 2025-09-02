@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socialmedia-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: socialmedia
+  template:
+    metadata:
+      labels:
+        app: socialmedia
+    spec:
+      containers:
+      - name: socialmedia
+        image: socialmedia-app:latest
+        ports:
+        - containerPort: 5000
