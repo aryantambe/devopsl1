@@ -1,0 +1,9 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: react-prod
+    ports:
+      - "8080:80" # host:container (change host port if 80 is busy)
+    restart: unless-stopped

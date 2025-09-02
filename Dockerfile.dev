@@ -1,0 +1,19 @@
+# ---------- Dev: run Vite/CRA dev server with hot reload ----------
+FROM node:20-alpine
+
+# Set work dir
+WORKDIR /app
+
+# Install deps separately for better caching
+COPY package*.json ./
+RUN npm ci
+
+# Copy source
+COPY . .
+
+# Expose CRA default port
+EXPOSE 3000
+
+# Use host polling for mac/WSL reliability; CRA listens on 0.0.0.0
+ENV CHOKIDAR_USEPOLLING=true
+CMD ["npm", "start"]
