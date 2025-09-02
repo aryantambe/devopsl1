@@ -1,0 +1,16 @@
+{
+  "name": "angular-docker-app",
+  "version": "0.0.1",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/core": "^16.0.0",
+    "@angular/cli": "^16.0.0",
+    "rxjs": "^7.8.0",
+    "zone.js": "~0.13.0"
+  }
+}
