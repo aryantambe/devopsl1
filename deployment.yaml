@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: socialmedia-app
-          image: social-media:latest   # <-- your pushed DockerHub image
+          image: social-media:latest
           ports:
             - containerPort: 8000
           resources:
