@@ -34,7 +34,7 @@ This project demonstrates a full DevSecOps workflow for a Spring Boot-based **Re
 
 Clone the Repo
 ```bash
-git clone https://github.com/Abhishek-2502/DockerHub_Scout_DCT
+git clone 
 ````
 
 Change directory
@@ -120,7 +120,7 @@ export DOCKER_CONTENT_TRUST=1
 
 Generating Key
 ```bash
-docker trust key generate abhishekkey
+docker trust key generate key
 ```
 
 ### 2️⃣ Sign the Image and Push
@@ -136,7 +136,7 @@ docker push <dockerhub_username>/retail-app:v1
 
 * Your root key
 * The repository key
-* The signer key (abhishekkey)
+* The signer key (key)
 
 📝 These keys are stored securely under:
 `C:\Users\<YourName>\.docker\trust\private\`
@@ -185,7 +185,5 @@ docker pull <dockerhub_username>/retail-app:v1
 
 ## 🔐 Author
 
-**Abhishek Rajput**
-- Email: [abhishek25022004@gmail.com](mailto:abhishek25022004@gmail.com)
-- DockerHub: [abhi25022004](https://hub.docker.com/u/abhi25022004)
+**Arnav Jain**
 
