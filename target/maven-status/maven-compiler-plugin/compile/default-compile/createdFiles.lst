@@ -1,0 +1,4 @@
+com\retailcompany\app\model\Product.class
+com\retailcompany\app\controller\ProductController.class
+com\retailcompany\app\service\ProductService.class
+com\retailcompany\app\Application.class
