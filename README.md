@@ -1,8 +1,3 @@
-# ☁️ Cloud Algorithm Simulator - Backend
-
-The **Cloud Algorithm Simulator - Backend** is a microservices-based system built with **Spring Boot** that integrates **CloudSim** to simulate and analyze various **cloud scheduling algorithms**. It optimizes cloud resource allocation by evaluating different task scheduling strategies.
-
----
 
 ## 📚 Table of Contents
 
@@ -198,7 +193,7 @@ These parameters define the **simulation environment**:
 ### 1️⃣ Clone the Repository
 
 ```bash  
-git clone https://github.com/Abhishek-2502/Cloud_Algorithm_Simulator_Backend.git  
+git clone   
 cd Cloud_Algorithm_Simulator_Backend  
 ```  
 
@@ -226,12 +221,6 @@ docker run -d -p 8080:8080 cloudsim-backend
 ```  
 
 This will start the backend in a **detached mode (-d)** and expose it on **port 8080**.
-
----
-
-## Authors
-
-- **Abhishek Rajput** - [GitHub](https://github.com/Abhishek-2502)
 
 ---
 
