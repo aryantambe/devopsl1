@@ -1,5 +1,3 @@
-NAME : HRITHIK RAYAPATI
-PRN : 22070122082
 
 
 # Getting Started with Create React App
