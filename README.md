@@ -1,4 +1,4 @@
-# Retail Company App
+# Company Retail App
 
 ## Build and Run Locally
 
