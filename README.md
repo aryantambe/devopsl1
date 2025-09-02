@@ -1,3 +1,6 @@
-# DO NOT PUSH ANYTHING ON MAIN
+## Command to initialize Angular App
+- npm install -g @angular/cli
+- ng new hello-app
+- ng serve
 
-## Branch nomenclature: name-prn-assignment-1
+Note: Angular 17+ builds output to dist/<app>/browser/ (not directly to dist/<app>/)
