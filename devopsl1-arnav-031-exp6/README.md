@@ -4,9 +4,9 @@ docker build -t social-media:latest .
 
 # DockerHub
 
-docker tag social-media:latest aaryandhawan/social-media:latest
+docker tag social-media:latest arnavkhandelwal/social-media:latest
 
-docker push aaryandhawan/social-media:latest
+docker push arnavkhandelwal/social-media:latest
 
 
 # MINIKUBE
