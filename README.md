@@ -1,4 +1,4 @@
-# 📌 Social Media  – Kubernetes + Docker 
+# Social Media  – Kubernetes + Docker 
 
 
 
