@@ -11,13 +11,27 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                // Load nvm and use Node 20
+                sh '''
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                    nvm install 20
+                    nvm use 20
+                    node -v
+                    npm -v
+                    npm install
+                '''
             }
         }
 
         stage('Build Angular App') {
             steps {
-                sh 'npm run build --prod'
+                sh '''
+                    export NVM_DIR="$HOME/.nvm"
+                    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+                    nvm use 20
+                    npm run build --prod
+                '''
             }
         }
 
