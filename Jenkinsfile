@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     tools {
-        nodejs "NodeJS-24"   
+        nodejs "NodeJS-24"   // Your configured NodeJS tool name
     }
 
     stages {
@@ -15,25 +15,33 @@ pipeline {
 
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                dir('Project2/my-angular-app') {
+                    sh 'npm install'
+                }
             }
         }
 
         stage('Build Angular App') {
             steps {
-                sh 'npm run build --prod'
+                dir('Project2/my-angular-app') {
+                    sh 'npm run build --prod'
+                }
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh 'docker build -t my-angular-app:latest .'
+                dir('Project2/my-angular-app') {
+                    sh 'docker build -t my-angular-app:latest .'
+                }
             }
         }
 
         stage('Deploy with Docker Compose') {
             steps {
-                sh 'docker-compose up -d --build'
+                dir('Project2/my-angular-app') {
+                    sh 'docker-compose up -d --build'
+                }
             }
         }
     }
