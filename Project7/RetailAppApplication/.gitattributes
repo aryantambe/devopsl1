@@ -1,0 +1,7 @@
+/mvnw text eol=lf
+*.cmd text eol=crlf
+
+* text=auto
+# ensure shell scripts use LF so they’re executable in Linux containers
+*.sh text eol=lf
+ # mvnw text eol=lf
