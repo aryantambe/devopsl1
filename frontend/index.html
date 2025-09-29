@@ -1,0 +1,31 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Microservices Demo Frontend</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; }
+    button { margin: 6px; padding: 8px 12px; }
+    pre { background:#f4f4f4; padding:10px; }
+  </style>
+</head>
+<body>
+  <h1>Microservices Demo Frontend</h1>
+  <p>Buttons below call services in the cluster (assumes services accessible).</p>
+  <button onclick="call('/api/products','GET')">Get Products</button>
+  <button onclick="call('/api/user','GET')">Get User</button>
+  <button onclick="call('/api/token','POST')">Get Token</button>
+  <button onclick="call('/api/order','POST')">Create Order</button>
+  <pre id="out">Click a button to see output</pre>
+
+<script>
+async function call(path, method='GET'){
+  try{
+    const res = await fetch(path, {method, headers:{'Content-Type':'application/json'}, body: method==='POST' ? JSON.stringify({sample: true}) : undefined});
+    const data = await res.json();
+    document.getElementById('out').textContent = JSON.stringify(data, null, 2);
+  }catch(e){ document.getElementById('out').textContent = 'Error: '+e.toString(); }
+}
+</script>
+</body>
+</html>
