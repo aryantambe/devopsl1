@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-config
+data:
+  # name of the mongo service to connect to from mongo-express
+  database-url: mongo-service
