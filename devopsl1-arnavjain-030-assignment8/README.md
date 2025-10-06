@@ -2,17 +2,17 @@
 ## 1. Build images locally and push to registry (from project root):
 
 ```
-docker build --no-cache -t abhi25022004/users:1.0 ./users
-docker push abhi25022004/users:1.0
+docker build --no-cache -t arnavjain2503/users:1.0 ./users
+docker push arnavjain2503/users:1.0
 
-docker build --no-cache -t abhi25022004/posts:1.0 ./posts
-docker push abhi25022004/posts:1.0
+docker build --no-cache -t arnavjain2503/posts:1.0 ./posts
+docker push arnavjain2503/posts:1.0
 
-docker build --no-cache -t abhi25022004/api-gateway:1.0 ./api-gateway
-docker push abhi25022004/api-gateway:1.0
+docker build --no-cache -t arnavjain2503/api-gateway:1.0 ./api-gateway
+docker push arnavjain2503/api-gateway:1.0
 
-docker build --no-cache -t abhi25022004/frontend:1.0 ./frontend
-docker push abhi25022004/frontend:1.0
+docker build --no-cache -t arnavjain2503/frontend:1.0 ./frontend
+docker push arnavjain2503/frontend:1.0
 ```
 
 ## 2. Update images in K8s manifests (your-registry/...) to your pushed image names.
@@ -44,4 +44,4 @@ kubectl rollout status deployment/frontend-deploy -n microapp
 ```
 
 ## Author
-- Abhishek Rajput
+- Arnav Jain
