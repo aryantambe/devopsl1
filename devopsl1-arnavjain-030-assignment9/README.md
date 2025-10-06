@@ -39,4 +39,4 @@ kubectl delete deployment apache-deployment
 ```
 
 ## Author
-- Abhishek Rajput
+- Arnav Jain
