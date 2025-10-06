@@ -1,0 +1,26 @@
+pipeline {
+    agent any
+    environment {
+        DOCKERHUB = credentials('dockerhub-creds')
+    }
+    stages {
+        stage('Build & Push') {
+            steps {
+                script {
+                    def services = ['auth', 'users', 'products', 'orders']
+                    for (s in services) {
+                        dir("services/${s}") {
+                            sh "docker build -t ${DOCKERHUB_US}/${s}:1.0.0 ."
+                            sh "docker push ${DOCKERHUB_US}/${s}:1.0.0"
+                        }
+                    }
+                }
+            }
+        }
+        stage('Deploy to K8s') {
+            steps {
+                sh "kubectl apply -f k8s/ -n project8"
+            }
+        }
+    }
+}
