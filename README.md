@@ -75,6 +75,3 @@ This project demonstrates how to deploy a simple Apache web server to a local Ku
 ## Final Result
 
 Once all the steps are complete and the service is accessible, you should be able to view the default Apache welcome page in your web browser.
-![prrof1](./image1.png)
-![prrof23](./image2.png)
-![prrof](./image3.png)
