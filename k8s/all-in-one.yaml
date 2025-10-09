@@ -1,0 +1,254 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: demo-micro
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-config
+  namespace: demo-micro
+data:
+  AUTH_URL: "http://auth-service:4001"
+  USER_URL: "http://user-service:4002"
+  PRODUCT_URL: "http://product-service:4003"
+  ORDER_URL: "http://order-service:4004"
+  FRONTEND_PORT: "80"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-secrets
+  namespace: demo-micro
+type: Opaque
+data:
+  DB_PASSWORD: c3VwZXJzZWNyZXQ=
+  SERVICE_API_KEY: ZGVtb2tleQ==
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auth-service
+  namespace: demo-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-service
+  template:
+    metadata:
+      labels:
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        image: trishaboda/auth-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4001
+        env:
+        - name: SERVICE_NAME
+          value: "auth-service"
+        - name: PORT
+          value: "4001"
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-service
+  namespace: demo-micro
+spec:
+  selector:
+    app: auth-service
+  ports:
+  - protocol: TCP
+    port: 4001
+    targetPort: 4001
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  namespace: demo-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+      - name: user-service
+        image: trishaboda/user-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4002
+        env:
+        - name: SERVICE_NAME
+          value: "user-service"
+        - name: PORT
+          value: "4002"
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+  namespace: demo-micro
+spec:
+  selector:
+    app: user-service
+  ports:
+  - protocol: TCP
+    port: 4002
+    targetPort: 4002
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-service
+  namespace: demo-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: product-service
+  template:
+    metadata:
+      labels:
+        app: product-service
+    spec:
+      containers:
+      - name: product-service
+        image: trishaboda/product-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4003
+        env:
+        - name: SERVICE_NAME
+          value: "product-service"
+        - name: PORT
+          value: "4003"
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: product-service
+  namespace: demo-micro
+spec:
+  selector:
+    app: product-service
+  ports:
+  - protocol: TCP
+    port: 4003
+    targetPort: 4003
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-service
+  namespace: demo-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order-service
+  template:
+    metadata:
+      labels:
+        app: order-service
+    spec:
+      containers:
+      - name: order-service
+        image: trishaboda/order-service:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 4004
+        env:
+        - name: SERVICE_NAME
+          value: "order-service"
+        - name: PORT
+          value: "4004"
+        envFrom:
+        - configMapRef:
+            name: app-config
+        - secretRef:
+            name: app-secrets
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: order-service
+  namespace: demo-micro
+spec:
+  selector:
+    app: order-service
+  ports:
+  - protocol: TCP
+    port: 4004
+    targetPort: 4004
+  type: ClusterIP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: demo-micro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: trishaboda/frontend:v1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: app-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: demo-micro
+spec:
+  selector:
+    app: frontend
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+  type: NodePort
