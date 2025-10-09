@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-deployment
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        # Mock Image: Serves a "Hello World" page
+        image: nginxdemos/hello:plain-text 
+        ports:
+        - containerPort: 80
+        env:
+        # Configuration for the frontend to know where the APIs are
+        - name: CATALOG_API
+          valueFrom:
+            configMapKeyRef:
+              name: ecom-config
+              key: catalog_api_url
+        - name: ORDER_API
+          valueFrom:
+            configMapKeyRef:
+              name: ecom-config
+              key: order_api_url
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: catalog-deployment
+  labels:
+    app: catalog
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: catalog
+  template:
+    metadata:
+      labels:
+        app: catalog
+    spec:
+      containers:
+      - name: catalog-service
+        # Mock Image: A simple HTTP endpoint that echoes requests (port 80)
+        image: kennethreitz/httpbin 
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: ecom-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: order-deployment
+  labels:
+    app: order
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: order
+  template:
+    metadata:
+      labels:
+        app: order
+    spec:
+      containers:
+      - name: order-service
+        # Mock Image: A simple HTTP endpoint that echoes requests (port 80)
+        image: kennethreitz/httpbin 
+        ports:
+        - containerPort: 80
+        envFrom:
+        - configMapRef:
+            name: ecom-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  labels:
+    app: postgres
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: postgres
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        # Actual Database Image: This is a robust, working image.
+        image: postgres:13
+        ports:
+        - containerPort: 5432
+        env:
+        # DB Name and User from ConfigMap
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: ecom-config
+              key: db_name
+        - name: POSTGRES_USER
+          valueFrom:
+            configMapKeyRef:
+              name: ecom-config
+              key: db_user
+        # DB Password from Secret
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ecom-db-secret
+              key: db_password

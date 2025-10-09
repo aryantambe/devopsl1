@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ecom-config
+data:
+  # Database Configuration
+  db_name: ecom_database
+  db_user: ecom_user
+  db_host: postgres-service # Service name for connectivity
+
+  # Frontend Configuration
+  # Note: The service names (catalog-service, order-service) resolve to the 
+  # ClusterIP, and we use the port defined in the Service (8080, 8081).
+  catalog_api_url: http://catalog-service:8080/api/products
+  order_api_url: http://order-service:8081/api/orders
