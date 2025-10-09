@@ -1,0 +1,199 @@
+# -------------------------
+# Namespace
+# -------------------------
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: mongo-app
+---
+# -------------------------
+# Mongo root credentials
+# -------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-root-secret
+  namespace: mongo-app
+type: Opaque
+stringData:
+  MONGO_INITDB_ROOT_USERNAME: admin
+  MONGO_INITDB_ROOT_PASSWORD: StrongPassword123!
+---
+# -------------------------
+# mongo-express UI credentials
+# -------------------------
+apiVersion: v1
+kind: Secret
+metadata:
+  name: mongo-express-secret
+  namespace: mongo-app
+type: Opaque
+stringData:
+  ME_CONFIG_BASICAUTH_USERNAME: mexadmin
+  ME_CONFIG_BASICAUTH_PASSWORD: mexpass123
+---
+# -------------------------
+# mongo-express ConfigMap
+# -------------------------
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongo-express-config
+  namespace: mongo-app
+data:
+  ME_CONFIG_MONGODB_SERVER: mongo-service
+  ME_CONFIG_MONGODB_PORT: "27017"
+  ME_CONFIG_MONGODB_ENABLE_ADMIN: "true"
+  ME_CONFIG_SITE_PORT: "8081"
+---
+# -------------------------
+# PVC for MongoDB
+# -------------------------
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongo-pvc
+  namespace: mongo-app
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+---
+# -------------------------
+# MongoDB Deployment
+# -------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-deployment
+  namespace: mongo-app
+  labels:
+    app: mongo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo
+  template:
+    metadata:
+      labels:
+        app: mongo
+    spec:
+      containers:
+        - name: mongo
+          image: mongo:6.0
+          ports:
+            - containerPort: 27017
+              name: mongo
+          env:
+            - name: MONGO_INITDB_ROOT_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-root-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: MONGO_INITDB_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-root-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: mongo-pvc
+---
+# -------------------------
+# MongoDB Service (internal)
+# -------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  namespace: mongo-app
+spec:
+  selector:
+    app: mongo
+  ports:
+    - port: 27017
+      targetPort: 27017
+      protocol: TCP
+---
+# -------------------------
+# mongo-express Deployment
+# -------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo-express-deployment
+  namespace: mongo-app
+  labels:
+    app: mongo-express
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mongo-express
+  template:
+    metadata:
+      labels:
+        app: mongo-express
+    spec:
+      containers:
+        - name: mongo-express
+          image: mongo-express:latest
+          ports:
+            - containerPort: 8081
+              name: http
+          env:
+            - name: ME_CONFIG_MONGODB_SERVER
+              value: mongo-service
+            - name: ME_CONFIG_MONGODB_PORT
+              value: "27017"
+            - name: ME_CONFIG_MONGODB_ENABLE_ADMIN
+              value: "true"
+            - name: ME_CONFIG_SITE_PORT
+              value: "8081"
+            - name: ME_CONFIG_BASICAUTH_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-express-secret
+                  key: ME_CONFIG_BASICAUTH_USERNAME
+            - name: ME_CONFIG_BASICAUTH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-express-secret
+                  key: ME_CONFIG_BASICAUTH_PASSWORD
+            - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-root-secret
+                  key: MONGO_INITDB_ROOT_USERNAME
+            - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mongo-root-secret
+                  key: MONGO_INITDB_ROOT_PASSWORD
+            - name: ME_CONFIG_MONGODB_AUTH_DATABASE
+              value: admin
+---
+# -------------------------
+# mongo-express Service (NodePort)
+# -------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-express-service
+  namespace: mongo-app
+spec:
+  type: NodePort
+  selector:
+    app: mongo-express
+  ports:
+    - port: 8081
+      targetPort: 8081
+      protocol: TCP
+      nodePort: 30081
