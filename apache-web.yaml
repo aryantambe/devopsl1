@@ -1,0 +1,43 @@
+# ---------------------------------
+# 1. Deployment: Runs the Apache HTTP Server
+# ---------------------------------
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apache-deployment
+  labels:
+    app: apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+    spec:
+      containers:
+      - name: apache-container
+        # Official Apache HTTP Server image
+        image: httpd:latest
+        ports:
+        - containerPort: 80 # Apache listens on port 80 inside the container
+---
+# ---------------------------------
+# 2. Service: Exposes the Deployment externally via NodePort
+# ---------------------------------
+apiVersion: v1
+kind: Service
+metadata:
+  name: apache-nodeport-service
+spec:
+  selector:
+    app: apache # Selects the Pods created by the 'apache-deployment'
+  type: NodePort # This type opens a port on the host machine/node
+  ports:
+    - protocol: TCP
+      port: 80 # The port the Service exposes internally
+      targetPort: 80 # The port the container is listening on (Apache's port)
+      # Kubernetes will automatically assign a NodePort between 30000-32767
+      # Example: nodePort: 30080 (optional, Kubernetes usually assigns it)
