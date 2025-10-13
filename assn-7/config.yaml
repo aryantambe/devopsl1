@@ -1,0 +1,10 @@
+# configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mongodb-config
+  namespace: mongodb-namespace
+data:
+  database-url: mongodb-service
+  database-port: "27017"
+  database-name: admin
