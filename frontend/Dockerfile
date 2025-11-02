@@ -1,6 +1,6 @@
 # Frontend: static site served by nginx
 FROM nginx:1.27-alpine
-LABEL maintainer="abhishek25022004@gmail.com"
+LABEL maintainer="dhruvdoshi.pvt@gmail.com"
 
 # Remove default config and copy our proxy config
 RUN rm /etc/nginx/conf.d/default.conf
