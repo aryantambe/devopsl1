@@ -29,4 +29,4 @@ spec:
   ports:
     - port: 80
       targetPort: 80
-      nodePort: 30089   # You can pick a port between 30000–32767
+      nodePort: 30089   
