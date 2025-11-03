@@ -1,32 +1,34 @@
 pipeline {
     agent any
     stages {
-        stage('Parallel Build Stages') {
+        stage('Parallel Build') {
             parallel {
-                stage('Build') {
+                stage('Build Payment Service') {
                     steps {
-                        echo "Building the ${env.BRANCH_NAME} branch..."
-                        bat 'echo Simulating build process for payment module'
+                        echo "Building payment module for ${env.BRANCH_NAME}"
+                        sleep 3
                     }
                 }
-                stage('Test') {
+                stage('Run Payment Tests') {
                     steps {
-                        echo "Testing the ${env.BRANCH_NAME} branch..."
-                        bat 'echo Running unit tests for payment module'
+                        echo "Running payment tests for ${env.BRANCH_NAME}"
+                        sleep 3
                     }
                 }
-                stage('Deploy') {
+                stage('Code Quality Check') {
                     steps {
-                        echo "Deploying the ${env.BRANCH_NAME} branch..."
-                        bat 'echo Deploying payment service'
+                        echo "Checking code quality for ${env.BRANCH_NAME}"
+                        sleep 3
                     }
                 }
             }
         }
-    }
-    post {
-        always {
-            echo "Pipeline completed for branch: ${env.BRANCH_NAME}"
+        stage('Deploy') {
+            steps {
+                echo "Deploying ${env.BRANCH_NAME} branch"
+                sleep 2
+                echo "Deployment complete!"
+            }
         }
     }
 }
