@@ -1,3 +1,12 @@
-# DO NOT PUSH ANYTHING ON MAIN
+# Server and newsfeed web app running on 30007
 
-## Branch nomenclature: name-prn-assignment-1
+![alt text](image.png)
+
+# commands verifying deployemnt and service running
+
+![alt text](image-1.png)
+
+# Command verifying service of nodeport correctly configured and running
+
+![alt text](image-2.png)
+
