@@ -1,0 +1,53 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookhub-frontend
+  labels:
+    app: bookhub
+    tier: frontend
+spec:
+  selector:
+    app: bookhub
+    tier: frontend
+  ports:
+    - protocol: TCP
+      port: 80           # Cluster service port
+      targetPort: 3000   # Frontend container port
+  type: ClusterIP        # Internal access (Ingress will expose it)
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookhub-backend
+  labels:
+    app: bookhub
+    tier: backend
+spec:
+  selector:
+    app: bookhub
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: 5000         # Cluster service port
+      targetPort: 5000   # Backend container port
+  type: ClusterIP
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: bookhub-database
+  labels:
+    app: bookhub
+    tier: database
+spec:
+  selector:
+    app: bookhub
+    tier: database
+  ports:
+    - protocol: TCP
+      port: 3306         # MySQL/PostgreSQL default port
+      targetPort: 3306
+  clusterIP: None        # Headless service for direct pod-to-pod access
