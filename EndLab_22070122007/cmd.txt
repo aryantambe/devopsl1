@@ -1,0 +1,20 @@
+# Navigate to the project folder
+cd newsfeed-app
+
+# Build Docker image
+docker build -t newsfeed-app:latest .
+
+# Run locally
+docker run -p 5000:5000 newsfeed-app
+
+docker tag newsfeed-app:latest abhi25022004/newsfeed-app:latest
+docker push abhi25022004/newsfeed-app:latest
+
+
+kubectl apply -f deployment.yaml
+kubectl apply -f service.yaml
+
+minikube service newsfeed-app-service
+
+
+
