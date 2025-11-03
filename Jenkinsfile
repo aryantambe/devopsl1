@@ -1,32 +1,34 @@
 pipeline {
     agent any
     stages {
-        stage('Parallel Build Stages') {
+        stage('Parallel Build') {
             parallel {
-                stage('Build') {
+                stage('Compile Code') {
                     steps {
-                        echo "Building the ${env.BRANCH_NAME} branch..."
-                        bat 'echo Simulating build process for login module'
+                        echo "Compiling login module for ${env.BRANCH_NAME}"
+                        sleep 3
                     }
                 }
-                stage('Test') {
+                stage('Run Unit Tests') {
                     steps {
-                        echo "Testing the ${env.BRANCH_NAME} branch..."
-                        bat 'echo Running unit tests for login module'
+                        echo "Running tests for ${env.BRANCH_NAME}"
+                        sleep 3
                     }
                 }
-                stage('Deploy') {
+                stage('Security Scan') {
                     steps {
-                        echo "Deploying the ${env.BRANCH_NAME} branch..."
-                        bat 'echo Deploying login service'
+                        echo "Scanning code for ${env.BRANCH_NAME}"
+                        sleep 3
                     }
                 }
             }
         }
-    }
-    post {
-        always {
-            echo "Pipeline completed for branch: ${env.BRANCH_NAME}"
+        stage('Deploy') {
+            steps {
+                echo "Deploying ${env.BRANCH_NAME} branch"
+                sleep 2
+                echo "Deployment done!"
+            }
         }
     }
 }
